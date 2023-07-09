@@ -1,1 +1,35 @@
-<p>person-list works!</p>
+<div *ngFor="let person of persons" class="card card-body mb-2">
+    <div class="row">
+      <div class="col-md-8">
+        <ul>
+          <li>
+            id: {{person.id}}
+          </li>
+          <li>
+            nombre completo: {{person.fullName}}
+          </li>
+          <li>
+            fecha: {{person.date}}
+          </li>
+          <li>
+            area: {{person.area}}
+          </li>
+          <li>
+            categoria: {{person.category}}
+          </li>
+          <li>
+            nivel de satifación: {{person.satisfactionLevel}}
+          </li>
+        </ul>
+        
+       
+        <button [routerLink]="['/person/edit', person.id]" class="btn btn-secondary">
+          Edit
+        </button>
+      </div>
+      <div class="col-md-4">
+        <img [src]="person.company[1]" class="card-img">
+        <p>{{ person.company[0] }}</p>
+      </div>
+    </div>
+  </div>
