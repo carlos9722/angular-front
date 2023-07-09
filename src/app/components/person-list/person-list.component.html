@@ -1,35 +1,58 @@
-<div *ngFor="let person of persons" class="card card-body mb-2">
-    <div class="row">
-      <div class="col-md-8">
-        <ul>
-          <li>
-            id: {{person.id}}
-          </li>
-          <li>
-            nombre completo: {{person.fullName}}
-          </li>
-          <li>
-            fecha: {{person.date}}
-          </li>
-          <li>
-            area: {{person.area}}
-          </li>
-          <li>
-            categoria: {{person.category}}
-          </li>
-          <li>
-            nivel de satifación: {{person.satisfactionLevel}}
-          </li>
-        </ul>
-        
-       
-        <button [routerLink]="['/person/edit', person.id]" class="btn btn-secondary">
-          Edit
-        </button>
-      </div>
-      <div class="col-md-4">
-        <img [src]="person.company[1]" class="card-img">
-        <p>{{ person.company[0] }}</p>
-      </div>
+<div class="sort-buttons">
+  <button class="sort-button" (click)="sortPersonsBySatisfactionLevel(!sortAscending)">
+    Sort by Satisfaction Level <span [ngClass]="sortAscending ? 'arrow-down' : 'arrow-up'"></span>
+  </button>
+  <button class="sort-button" (click)="sortPersonsByCategory(!sortAscending)">
+    Sort by Category <span [ngClass]="sortAscending ? 'arrow-down' : 'arrow-up'"></span>
+  </button>
+</div>
+
+<input type="text" [(ngModel)]="searchQuery" (input)="searchPersons()" placeholder="Search">
+
+<div *ngFor="let person of displayedPersons" class="card card-body mb-2">
+  <div class="row">
+    <div class="col-md-8">
+      <ul>
+        <li>
+          id: {{person.id}}
+        </li>
+        <li>
+          nombre completo: {{person.fullName}}
+        </li>
+        <li>
+          fecha: {{person.date}}
+        </li>
+        <li>
+          area: {{person.area}}
+        </li>
+        <li>
+          categoria: {{person.category}}
+        </li>
+        <li>
+          nivel de satisfacción: {{person.satisfactionLevel}}
+        </li>
+      </ul>
+      <button [routerLink]="['/person/edit', person.id]" class="btn btn-secondary">
+        Edit
+      </button>
+    </div>
+    <div class="col-md-4">
+      <img [src]="person.company[1]" class="card-img">
+      <p>{{ person.company[0] }}</p>
     </div>
   </div>
+</div>
+
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <a class="page-link" href="#" (click)="changePage(currentPage - 1)">Previous</a>
+    </li>
+    <li class="page-item" *ngFor="let page of totalPages" [class.active]="currentPage === page">
+      <a class="page-link" href="#" (click)="changePage(page)">{{ page }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages.length">
+      <a class="page-link" href="#" (click)="changePage(currentPage + 1)">Next</a>
+    </li>
+  </ul>
+</nav>
