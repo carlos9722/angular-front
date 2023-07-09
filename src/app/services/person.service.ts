@@ -23,7 +23,7 @@ export class PersonService {
   }
 
   createPerson(person: Person): Observable<Person> {
-    return this.http.post<Person>(`${this.BASE_URL}/person/create`, person);
+    return this.http.post<Person>(`${this.BASE_URL}/person`, person);
   }
 
 
